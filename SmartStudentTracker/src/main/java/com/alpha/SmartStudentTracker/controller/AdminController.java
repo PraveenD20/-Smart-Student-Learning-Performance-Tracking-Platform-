@@ -34,7 +34,7 @@ public class AdminController {
 	}
 
 	// this is the method where admin can save the trainers
-	@PostMapping("/SaveTrainer")
+	@PostMapping("/SaveTrainer")	
 	public ResponseEntity<ResponseStructure<Users>> saveTrainer(@RequestBody Users user) {
 		return userservice.saveUsers(user);
 
@@ -45,18 +45,19 @@ public class AdminController {
 		return userservice.saveUsers(user);
 
 	}
+	//method to save the course
 	@PostMapping("/SaveCourse")
 	public ResponseEntity<ResponseStructure<Courses>> saveCourse(@RequestBody Courses course) {
 		return coursesservice.saveCourse(course);
 
 	}
-
+    // method to get all the Trainers
 	@GetMapping("/getAllTrainers")
 	public List<TrainersResponse> GetAllTrainers() {
 		return userservice.getAllTrainers();
 
 	}
-	
+	// method to get all the Courses
 	@GetMapping("/getAllCourses")
 	public List<Courses>  GetAllCourses() {
 		return coursesservice.getAllCourse();
