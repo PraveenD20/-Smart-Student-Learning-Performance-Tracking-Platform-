@@ -14,14 +14,14 @@ public class Users{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
- 
+
 	private String name;
-    
+
 	private String contact;
 	private String email;
 	private String password;
 	private String role;
-	
+
 	public Users() {
 		super();
 	}
@@ -31,7 +31,7 @@ public class Users{
 		this.id = id;
 		this.name = name;
 		this.contact = contact;
-		this.email = email;
+		this.email = email; 
 		this.password = password;
 		this.role = role;
 	}
@@ -84,7 +84,7 @@ public class Users{
 		this.role = role;
 	}
 
-	 
-	
+
+
 
 }
