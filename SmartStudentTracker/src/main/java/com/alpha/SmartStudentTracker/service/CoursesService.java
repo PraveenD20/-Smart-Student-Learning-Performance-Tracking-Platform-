@@ -20,7 +20,7 @@ public class CoursesService {
 	@Autowired
     private  CoursesRepository coursesrepository;
 	
-	 public ResponseEntity<ResponseStructure<Courses>> saveCourse(@RequestBody Courses course) {
+	 public ResponseEntity<ResponseStructure<Courses>> saveCourse(Courses course) {
 		 Optional<Courses> opt=coursesrepository.findByCoursename(course.getCoursename());
 		 
 		 ResponseStructure<Courses> rs=new ResponseStructure<Courses>();

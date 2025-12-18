@@ -12,8 +12,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.alpha.SmartStudentTracker.dto.ResponseStructure;
 import com.alpha.SmartStudentTracker.dto.TrainersResponse;
+import com.alpha.SmartStudentTracker.entity.Batches;
 import com.alpha.SmartStudentTracker.entity.Courses;
 import com.alpha.SmartStudentTracker.entity.Users;
+import com.alpha.SmartStudentTracker.service.BatcheService;
 import com.alpha.SmartStudentTracker.service.CoursesService;
 import com.alpha.SmartStudentTracker.service.UserService;
 
@@ -26,6 +28,8 @@ public class AdminController {
 	//Courses service
 	@Autowired
 	private CoursesService coursesservice;
+	@Autowired
+	private BatcheService batchservice;
 
 	// this is method is to save the Amin  meaning to register the admin first
 	@PostMapping("/RegisterAdmin")
@@ -62,6 +66,10 @@ public class AdminController {
 	public List<Courses>  GetAllCourses() {
 		return coursesservice.getAllCourse();
 		
+	}
+	@PostMapping("/createBatches")
+	public ResponseEntity<ResponseStructure<Batches>> createBatches(@RequestBody Batches batch) {
+		return  batchservice.saveBatches(batch);
 	}
 
 }

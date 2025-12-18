@@ -11,15 +11,24 @@ import org.springframework.web.bind.annotation.RequestBody;
 import com.alpha.SmartStudentTracker.dto.ResponseStructure;
 import com.alpha.SmartStudentTracker.entity.Batches;
 import com.alpha.SmartStudentTracker.entity.Courses;
+import com.alpha.SmartStudentTracker.entity.Users;
+import com.alpha.SmartStudentTracker.exception.CourseNotFoundException;
+import com.alpha.SmartStudentTracker.exception.UserNotFoundException;
 import com.alpha.SmartStudentTracker.repository.BatchesRepository;
+import com.alpha.SmartStudentTracker.repository.CoursesRepository;
+import com.alpha.SmartStudentTracker.repository.UserRepository;
 
 @Service
 public class BatcheService {
 	@Autowired
 	private BatchesRepository batchesrepository;
+	@Autowired
+	private CoursesRepository coursesRepository;
+	@Autowired
+	private UserRepository usersRepository;
 	
-		public ResponseEntity<ResponseStructure<Batches>> saveBatches(@RequestBody Batches batche) {
-			Optional<Batches> opt=batchesrepository.findById(batche.getId());
+		public ResponseEntity<ResponseStructure<Batches>> saveBatches(Batches batch) {
+			Optional<Batches> opt=batchesrepository.findByBatchname(batch.getBatchname());
 			ResponseStructure<Batches> rs=new ResponseStructure<Batches>();
 			
 			 if(opt.isPresent()) {
@@ -28,9 +37,24 @@ public class BatcheService {
 				 rs.setData(opt.get());
 				 return new ResponseEntity<ResponseStructure<Batches>>(rs,HttpStatus.CONFLICT); //209 conflict
 			 }
-			 Batches saved=batchesrepository.save(batche);
+			 
+			 // 🔴 VERY IMPORTANT PART
+			    Integer courseId = batch.getCourse().getId();
+			    Integer trainerId = batch.getTrainer().getId();
+
+			    Courses course = coursesRepository.findById(courseId)
+			            .orElseThrow(() -> new CourseNotFoundException("Course not found"));
+
+			    Users trainer = usersRepository.findById(trainerId)
+			            .orElseThrow(() -> new UserNotFoundException("Trainer not found"));
+
+			    // attach managed entities
+			    batch.setCourse(course);
+			    batch.setTrainer(trainer);
+			 
+			 Batches saved=batchesrepository.save(batch);
 			 rs.setStatuscode(HttpStatus.OK.value());
-			 rs.setMessage("Batches is saved with"+batche.getId());
+			 rs.setMessage("Batches is saved with");
 			 rs.setData(saved);
 			 return new ResponseEntity<ResponseStructure<Batches>>(rs,HttpStatus.OK); //200 OK
 		}
