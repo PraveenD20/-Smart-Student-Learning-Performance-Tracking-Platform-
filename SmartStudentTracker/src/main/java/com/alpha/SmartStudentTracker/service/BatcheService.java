@@ -8,11 +8,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import com.alpha.SmartStudentTracker.dto.AssigningBatchToStudent;
 import com.alpha.SmartStudentTracker.dto.ResponseStructure;
 import com.alpha.SmartStudentTracker.entity.Batches;
 import com.alpha.SmartStudentTracker.entity.Courses;
 import com.alpha.SmartStudentTracker.entity.Users;
+import com.alpha.SmartStudentTracker.exception.BatchNotFoundException;
 import com.alpha.SmartStudentTracker.exception.CourseNotFoundException;
+import com.alpha.SmartStudentTracker.exception.TopLevelException;
 import com.alpha.SmartStudentTracker.exception.UserNotFoundException;
 import com.alpha.SmartStudentTracker.repository.BatchesRepository;
 import com.alpha.SmartStudentTracker.repository.CoursesRepository;
@@ -63,6 +66,30 @@ public class BatcheService {
 			 return new ResponseEntity<ResponseStructure<Batches>>(rs,HttpStatus.OK); //200 OK
 		}
 	
+		public ResponseEntity<ResponseStructure<Users>> assignStudentsToBatch(Integer studentId, Integer batchId) {
+			ResponseStructure<Users> rs=new ResponseStructure<Users>();
+			
+			//fetching user meaning student details
+			Users student=usersRepository.findById(studentId).
+					orElseThrow(() -> new UserNotFoundException("Student with given Id is not Found") );
+			
+			if(!student.getRole().equals("STUDENT")) {
+				throw new TopLevelException("Batch can be Assigned to Students Only");
+				
+			}
+			
+			//now cross checking with the batch details
+			Batches bacth=batchesrepository.findById(batchId)
+					.orElseThrow( () -> new BatchNotFoundException("Batch with provided id is not found")); 
+			
+			student.setBatch(bacth);
+			
+			Users updatedStudent=usersRepository.save(student);
+			rs.setStatuscode(HttpStatus.OK.value());
+			rs.setMessage("Student Assigned to the Batch"+updatedStudent.getBatch());
+			rs.setData(updatedStudent);
+			return new ResponseEntity<ResponseStructure<Users>>(rs,HttpStatus.OK);
+		}
 	
 
 }

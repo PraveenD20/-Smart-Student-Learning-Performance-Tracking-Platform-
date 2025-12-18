@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.alpha.SmartStudentTracker.dto.AssigningBatchToStudent;
 import com.alpha.SmartStudentTracker.dto.ResponseStructure;
 import com.alpha.SmartStudentTracker.dto.TrainersResponse;
 import com.alpha.SmartStudentTracker.entity.Batches;
@@ -71,5 +72,19 @@ public class AdminController {
 	public ResponseEntity<ResponseStructure<Batches>> createBatches(@RequestBody Batches batch) {
 		return  batchservice.saveBatches(batch);
 	}
+   
+    //assigining  batches to the student
+	
+	@PostMapping("/assignStudentToBatch")
+	public ResponseEntity<ResponseStructure<Users>> assignStudentToBatch(
+	        @RequestBody AssigningBatchToStudent request) {
 
+	    return batchservice.assignStudentsToBatch(
+	            request.getStudentId(),
+	            request.getBatchId()
+	    );
+	}
+
+	
+	
 }

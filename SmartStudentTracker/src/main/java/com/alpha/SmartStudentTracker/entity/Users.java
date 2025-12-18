@@ -1,11 +1,14 @@
 package com.alpha.SmartStudentTracker.entity;
 
+import org.hibernate.annotations.ManyToAny;
 import org.hibernate.validator.constraints.Length;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 
@@ -21,6 +24,9 @@ public class Users{
 	private String email;
 	private String password;
 	private String role;
+	@ManyToOne
+	@JoinColumn(name="batch_id")
+	private Batches batch;
 
 	public Users() {
 		super();
@@ -82,6 +88,15 @@ public class Users{
 
 	public void setRole(String role) {
 		this.role = role;
+	}
+	
+	//for batch id only for assigning to student 
+	public Batches getBatch() {
+	    return batch;
+	}
+
+	public void setBatch(Batches batch) {
+	    this.batch = batch;
 	}
 
 
