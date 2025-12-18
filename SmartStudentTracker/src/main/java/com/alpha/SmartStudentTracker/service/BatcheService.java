@@ -38,10 +38,14 @@ public class BatcheService {
 				 return new ResponseEntity<ResponseStructure<Batches>>(rs,HttpStatus.CONFLICT); //209 conflict
 			 }
 			 
-			 // 🔴 VERY IMPORTANT PART
+			 //   IMPORTANT PART
+			 //   fetching the details or like basic details of the trainer and users from the db
 			    Integer courseId = batch.getCourse().getId();
 			    Integer trainerId = batch.getTrainer().getId();
-
+                
+			    
+			    //checking weather the given id by the user are present or not
+			    
 			    Courses course = coursesRepository.findById(courseId)
 			            .orElseThrow(() -> new CourseNotFoundException("Course not found"));
 
