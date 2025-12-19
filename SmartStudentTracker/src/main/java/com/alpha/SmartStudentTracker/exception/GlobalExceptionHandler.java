@@ -45,6 +45,15 @@ public class GlobalExceptionHandler {
 		return new  ResponseEntity<ResponseStructure<String>>(rs,HttpStatus.NOT_FOUND);
 	}
 	
-    
+    @ExceptionHandler(SubjectNotFoundException.class)
+    public ResponseEntity<ResponseStructure<String>> handleSubjectNotFoundException(SubjectNotFoundException e) {
+    	ResponseStructure<String> rs=new ResponseStructure<String>();
+    	
+    	rs.setStatuscode(HttpStatus.NOT_FOUND.value());
+    	rs.setMessage("Subject Not Found");
+    	rs.setData(null);
+    	
+    	return new ResponseEntity<ResponseStructure<String>>(rs,HttpStatus.NOT_FOUND);
+    }
    
 }
