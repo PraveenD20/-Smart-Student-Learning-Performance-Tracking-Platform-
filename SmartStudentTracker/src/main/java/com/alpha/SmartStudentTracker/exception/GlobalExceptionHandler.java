@@ -1,0 +1,50 @@
+package com.alpha.SmartStudentTracker.exception;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+
+import com.alpha.SmartStudentTracker.dto.ResponseStructure;
+
+@ControllerAdvice
+public class GlobalExceptionHandler {
+	
+	@ExceptionHandler(UserNotFoundException.class)
+	public ResponseEntity<ResponseStructure<String>> handleUserNotFoundException( UserNotFoundException e) {
+		ResponseStructure<String> rs=new ResponseStructure<String>();
+		
+		rs.setStatuscode(HttpStatus.NOT_FOUND.value());
+		rs.setMessage("User Not Found");
+		rs.setData("Not_Found");
+
+		return new  ResponseEntity<ResponseStructure<String>>(rs,HttpStatus.NOT_FOUND);
+		
+	}
+	
+	@ExceptionHandler(BatchNotFoundException.class)
+	public ResponseEntity<ResponseStructure<String>> handleBatchNotFoundException(BatchNotFoundException e) {
+        ResponseStructure<String> rs=new ResponseStructure<String>();
+		
+		rs.setStatuscode(HttpStatus.NOT_FOUND.value());
+		rs.setMessage("Batch Not Found");
+		rs.setData("Not_Found");
+
+		return new  ResponseEntity<ResponseStructure<String>>(rs,HttpStatus.NOT_FOUND);
+		
+	}
+	
+    @ExceptionHandler(CourseNotFoundException.class)
+	public ResponseEntity<ResponseStructure<String>> handleCourseNotFoundException(CourseNotFoundException e) {
+        ResponseStructure<String> rs=new ResponseStructure<String>();
+		
+		rs.setStatuscode(HttpStatus.NOT_FOUND.value());
+		rs.setMessage("Course Not Found");
+		rs.setData("Not_Found");
+
+		return new  ResponseEntity<ResponseStructure<String>>(rs,HttpStatus.NOT_FOUND);
+	}
+	
+    
+   
+}
