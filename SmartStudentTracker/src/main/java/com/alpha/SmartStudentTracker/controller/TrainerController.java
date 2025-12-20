@@ -10,7 +10,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.alpha.SmartStudentTracker.dto.ResponseStructure;
 import com.alpha.SmartStudentTracker.entity.Assesment;
+import com.alpha.SmartStudentTracker.entity.AssesmentResult;
 import com.alpha.SmartStudentTracker.entity.Attendence;
+import com.alpha.SmartStudentTracker.service.AssesmentResultService;
 import com.alpha.SmartStudentTracker.service.AssesmentService;
 import com.alpha.SmartStudentTracker.service.AttendenceService;
 
@@ -22,6 +24,8 @@ public class TrainerController {
 	private AttendenceService attendenceService;
 	@Autowired
 	private AssesmentService assesmentService;
+	@Autowired
+	private AssesmentResultService assesmentResultService;
 	
 	@PutMapping("/markAttendence")
 	public ResponseEntity<ResponseStructure<Attendence>> markAttendence(@RequestBody Attendence attendence) {
@@ -30,7 +34,11 @@ public class TrainerController {
     
 	@PostMapping("/createAssesment")
 	public ResponseEntity<ResponseStructure<Assesment>> createAssesment(@RequestBody Assesment assesment) {
-		return assesmentService.saveAssesment(assesment);
-		
+		return assesmentService.saveAssesment(assesment);	
+	}
+	
+	@PostMapping("/saveResult")
+	public ResponseEntity<ResponseStructure<AssesmentResult>> saveResult(@RequestBody AssesmentResult assesmentResult) {
+		return assesmentResultService.saveResult(assesmentResult);
 	}
 }

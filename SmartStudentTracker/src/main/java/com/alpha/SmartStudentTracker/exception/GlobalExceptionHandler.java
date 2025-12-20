@@ -55,5 +55,17 @@ public class GlobalExceptionHandler {
     	
     	return new ResponseEntity<ResponseStructure<String>>(rs,HttpStatus.NOT_FOUND);
     }
+    
+    @ExceptionHandler(AssesmentNotFoundException.class)
+    public ResponseEntity<ResponseStructure<String>> handleAssesmentNotFoundException(AssesmentNotFoundException e) {
+    	ResponseStructure<String> rs=new ResponseStructure<String>();
+    	
+    	rs.setStatuscode(HttpStatus.NOT_FOUND.value());
+    	rs.setMessage("Assesment Not Found");
+    	rs.setData(null);
+     
+    	return new ResponseEntity<ResponseStructure<String>>(rs,HttpStatus.NOT_FOUND);
+    	
+    }
    
 }

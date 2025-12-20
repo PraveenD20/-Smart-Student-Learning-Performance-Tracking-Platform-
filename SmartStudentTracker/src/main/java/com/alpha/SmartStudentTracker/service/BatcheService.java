@@ -15,7 +15,6 @@ import com.alpha.SmartStudentTracker.entity.Courses;
 import com.alpha.SmartStudentTracker.entity.Users;
 import com.alpha.SmartStudentTracker.exception.BatchNotFoundException;
 import com.alpha.SmartStudentTracker.exception.CourseNotFoundException;
-import com.alpha.SmartStudentTracker.exception.TopLevelException;
 import com.alpha.SmartStudentTracker.exception.UserNotFoundException;
 import com.alpha.SmartStudentTracker.repository.BatchesRepository;
 import com.alpha.SmartStudentTracker.repository.CoursesRepository;
@@ -74,7 +73,7 @@ public class BatcheService {
 					orElseThrow(() -> new UserNotFoundException("Student with given Id is not Found") );
 			
 			if(!student.getRole().equals("STUDENT")) {
-				throw new TopLevelException("Batch can be Assigned to Students Only");
+				throw new RuntimeException("Batch can be Assigned to Students Only");
 				
 			}
 			
