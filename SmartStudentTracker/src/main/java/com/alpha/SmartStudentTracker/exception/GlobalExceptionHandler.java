@@ -67,5 +67,15 @@ public class GlobalExceptionHandler {
     	return new ResponseEntity<ResponseStructure<String>>(rs,HttpStatus.NOT_FOUND);
     	
     }
+    
+    @ExceptionHandler(TaskNotFoundException.class)
+    public ResponseEntity<ResponseStructure<String>> handleTaskNotFoundException(TaskNotFoundException e) {
+    	ResponseStructure<String> rs=new ResponseStructure<String>();
+    	
+    	rs.setStatuscode(HttpStatus.NOT_FOUND.value());
+    	rs.setMessage("Task Not Found");
+    	rs.setData(null);
+    	return new ResponseEntity<ResponseStructure<String>>(rs,HttpStatus.NOT_FOUND);
+    }
    
 }
