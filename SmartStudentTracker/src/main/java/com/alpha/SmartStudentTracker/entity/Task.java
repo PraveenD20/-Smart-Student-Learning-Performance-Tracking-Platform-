@@ -23,6 +23,7 @@ public class Task {
 	@ManyToOne
 	@JoinColumn(name="trainer_id")
 	private Users trainer;
+	
 	public Task() {
 		super();
 	}

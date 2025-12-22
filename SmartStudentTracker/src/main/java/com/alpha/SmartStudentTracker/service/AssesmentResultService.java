@@ -55,4 +55,22 @@ public class AssesmentResultService {
 		
 	}
 
+   public ResponseEntity<ResponseStructure<AssesmentResult>> getResult(Integer studentid,Integer assesmentid) {
+		
+	    ResponseStructure<AssesmentResult> rs=new ResponseStructure<AssesmentResult>();
+	    
+	    Users student=userRepository.findById(studentid).orElseThrow( ( ) -> new UserNotFoundException("Student Not Found"));
+	    Assesment assesment=assesmentRepository.findById(assesmentid).orElseThrow( ( )-> new AssesmentNotFoundException("Assesment Not Found") );
+	    
+	    AssesmentResult assesmentResult=assesmentResultRepository.findByStudentAndAssesment(student, assesment).orElseThrow( ( )-> new RuntimeException("Assesment Results Not Found") ) ;
+		
+	    rs.setStatuscode(HttpStatus.OK.value());
+	    rs.setMessage("Assesment results are as Fallow");
+	    rs.setData(assesmentResult);
+	    
+	    return new ResponseEntity<ResponseStructure<AssesmentResult>>(rs,HttpStatus.OK);
+	    
+	}
+	
+	
 }

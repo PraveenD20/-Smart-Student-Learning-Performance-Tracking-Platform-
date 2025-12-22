@@ -31,10 +31,11 @@ public class TaskService {
 	public ResponseEntity<ResponseStructure<Task>> saveTask(Task task) {
 		ResponseStructure<Task> rs=new ResponseStructure<Task>();
 		
-		Batches batch=batchesRepository.findById(task.getBatch().getId()).orElseThrow( ( ) -> new BatchNotFoundException("Batch Not Found"));
-		Users user=userRepository.findById(task.getTrainer().getId()).orElseThrow( () -> new UserNotFoundException("User Not Found")); 
-		
-		Optional<Task> opt=taskRepository.findByBatchAndTrainer(batch, user);
+ 	Users user=userRepository.findById(task.getTrainer().getId()).orElseThrow( () -> new UserNotFoundException("User Not Found")); 
+	 String title=task.getTitle();
+	 String description=task.getDescription();
+ 	
+		Optional<Task> opt=taskRepository.findByTitleAndDescription(title,description);
 		
 		if(opt.isPresent()) {
 			rs.setStatuscode(HttpStatus.CONFLICT.value());
@@ -43,7 +44,7 @@ public class TaskService {
 			return new ResponseEntity<ResponseStructure<Task>>(rs, HttpStatus.CONFLICT);
 		}
 		task.setDate(LocalDate.now());
-		task.setBatch(batch);
+ 
         task.setTrainer(user);
         
         Task task2=taskRepository.save(task);
@@ -58,10 +59,12 @@ public class TaskService {
 	public ResponseEntity<ResponseStructure<Task>> assignTaskToBatch(Integer taskid,Integer batchid) {
 		
 		ResponseStructure<Task> rs=new ResponseStructure<Task>();
+		
 		 Task task=taskRepository.findById(taskid).orElseThrow( ( ) -> new TaskNotFoundException("Task Not Found"));
 		 Batches batch=batchesRepository.findById(batchid).orElseThrow( ( ) -> new BatchNotFoundException("Batch Not Found") );
 		 
 		 task.setBatch(batch);
+		 task.setDate(LocalDate.now());
 		 
 		Task task2= taskRepository.save(task);
 		rs.setStatuscode(HttpStatus.OK.value());
