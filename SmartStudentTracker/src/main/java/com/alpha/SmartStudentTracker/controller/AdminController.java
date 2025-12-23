@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.alpha.SmartStudentTracker.dto.AssigningBatchToStudent;
@@ -42,6 +43,11 @@ public class AdminController {
 	@PostMapping("/RegisterAdmin")
 	public ResponseEntity<ResponseStructure<Users>> saveAdmin(@RequestBody Users user) {
 		return userservice.saveUsers(user);
+	}
+	//login admin
+	@GetMapping("/login")
+	public ResponseEntity<ResponseStructure<Users>> login(@RequestParam String email,@RequestParam String password,@RequestParam String role) {
+		return userservice.getUser(email, password, role);
 	}
 
 	// this is the method where admin can save the trainers

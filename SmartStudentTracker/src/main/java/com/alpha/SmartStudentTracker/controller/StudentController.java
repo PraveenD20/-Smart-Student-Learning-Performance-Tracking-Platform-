@@ -20,6 +20,7 @@ import com.alpha.SmartStudentTracker.repository.AttendenceRepository;
 import com.alpha.SmartStudentTracker.service.AssesmentResultService;
 import com.alpha.SmartStudentTracker.service.AttendenceService;
 import com.alpha.SmartStudentTracker.service.TasksSubmissionService;
+import com.alpha.SmartStudentTracker.service.UserService;
 
 @RestController
 @RequestMapping("/student")
@@ -31,8 +32,13 @@ public class StudentController {
 	private TasksSubmissionService tasksSubmissionService;
 	@Autowired
 	private AssesmentResultService assesmentResultService;
+	@Autowired
+	private UserService userService;
 	
-	 
+	@GetMapping("/login")
+	public ResponseEntity<ResponseStructure<Users>> login(@RequestParam String email,@RequestParam String password,@RequestParam String role) {
+		return userService.getUser(email, password, role);
+	}
 	
 	@GetMapping("/getAttendence")
 	public ResponseEntity<ResponseStructure<String>> studentAttendence(@RequestParam Integer studentId,@RequestParam  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {

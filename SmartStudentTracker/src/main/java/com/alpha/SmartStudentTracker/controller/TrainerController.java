@@ -2,6 +2,7 @@ package com.alpha.SmartStudentTracker.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestAttribute;
@@ -17,11 +18,13 @@ import com.alpha.SmartStudentTracker.entity.AssesmentResult;
 import com.alpha.SmartStudentTracker.entity.Attendence;
 import com.alpha.SmartStudentTracker.entity.Task;
 import com.alpha.SmartStudentTracker.entity.TaskSubmission;
+import com.alpha.SmartStudentTracker.entity.Users;
 import com.alpha.SmartStudentTracker.service.AssesmentResultService;
 import com.alpha.SmartStudentTracker.service.AssesmentService;
 import com.alpha.SmartStudentTracker.service.AttendenceService;
 import com.alpha.SmartStudentTracker.service.TaskService;
 import com.alpha.SmartStudentTracker.service.TasksSubmissionService;
+import com.alpha.SmartStudentTracker.service.UserService;
 
 @RestController
 @RequestMapping("/trainer")
@@ -37,7 +40,15 @@ public class TrainerController {
 	private TaskService taskService;
     @Autowired
     private TasksSubmissionService tasksSubmissionService;
-	
+	@Autowired
+    private UserService userService;
+    
+    @GetMapping("/login")
+	public ResponseEntity<ResponseStructure<Users>> login(@RequestParam String email,@RequestParam String password,@RequestParam String role) {
+		return userService.getUser(email, password, role);
+	}
+    
+    
 	@PutMapping("/markAttendence")
 	public ResponseEntity<ResponseStructure<Attendence>> markAttendence(@RequestBody Attendence attendence) {
 		return attendenceService.markAttendence(attendence);

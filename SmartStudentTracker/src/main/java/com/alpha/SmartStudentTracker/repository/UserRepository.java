@@ -12,6 +12,7 @@ import com.alpha.SmartStudentTracker.entity.Users;
 public interface UserRepository extends JpaRepository<Users, Integer> {
 	 Optional<Users> findByContact(String contact);
 	 List<Users>findByRole(String role);
+	 Optional<Users> findByEmailAndPasswordAndRole(String email,String password,String role);
 	 
 
 }

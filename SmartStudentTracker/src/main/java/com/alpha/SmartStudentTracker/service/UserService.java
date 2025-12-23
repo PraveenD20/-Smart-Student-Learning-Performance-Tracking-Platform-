@@ -16,12 +16,15 @@ import com.alpha.SmartStudentTracker.controller.TrainerController;
 import com.alpha.SmartStudentTracker.dto.ResponseStructure;
 import com.alpha.SmartStudentTracker.dto.TrainersResponse;
 import com.alpha.SmartStudentTracker.entity.Users;
+import com.alpha.SmartStudentTracker.exception.UserNotFoundException;
 import com.alpha.SmartStudentTracker.repository.UserRepository;
 
 @Service
 public class UserService {
+	
 	@Autowired
 	private UserRepository userrepository;
+	
 	// this method to save the user, we can save any user like Admin we can save,Trainer and Student
 	public ResponseEntity<ResponseStructure<Users>> saveUsers(Users user) {
 		ResponseStructure<Users> rs = new ResponseStructure<>();
@@ -62,7 +65,18 @@ public class UserService {
 
 	}
 	
-	
-
-
+	public ResponseEntity<ResponseStructure<Users>> getUser(String email,String paswrd,String Role) {
+		
+		ResponseStructure<Users> rs=new ResponseStructure<Users>();
+		
+		Users user=userrepository.findByEmailAndPasswordAndRole(email, paswrd, Role).orElseThrow( ( ) -> new UserNotFoundException("User Not Found Check Your Credentials and Please Try again") );
+		
+		rs.setStatuscode(HttpStatus.OK.value());
+		rs.setMessage("Login Successfull");
+		rs.setData(user);
+		
+		return new ResponseEntity<ResponseStructure<Users>>(rs,HttpStatus.OK);
+		  
+		}
+ 
 }
