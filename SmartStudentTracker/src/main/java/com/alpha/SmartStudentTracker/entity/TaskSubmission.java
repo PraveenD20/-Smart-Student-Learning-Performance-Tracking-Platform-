@@ -18,18 +18,18 @@ public class TaskSubmission {
 	@ManyToOne
 	@JoinColumn(name="student_id")
 	private Users student;
-	private String status;
-	private Integer score;
+	
+	 
 	public TaskSubmission() {
 		super();
 	}
-	public TaskSubmission(Integer id, Task task, Users student, String status,  Integer score) {
+	public TaskSubmission(Integer id, Task task, Users student, String status) {
 		super();
 		this.id = id;
 		this.task = task;
 		this.student = student;
-		this.status = status;
-		this.score = score;
+		 
+		 
 	}
 	public Integer getId() {
 		return id;
@@ -49,17 +49,7 @@ public class TaskSubmission {
 	public void setStudent(Users student) {
 		this.student = student;
 	}
-	public String getStatus() {
-		return status;
-	}
-	public void setStatus(String status) {
-		this.status = status;
-	}
-	public  Integer getScore() {
-		return score;
-	}
-	public void setScore( Integer score) {
-		this.score = score;
-	}
+	 
+	 
 	
 }

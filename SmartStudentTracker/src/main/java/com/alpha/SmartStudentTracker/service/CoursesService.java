@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import com.alpha.SmartStudentTracker.dto.ResponseStructure;
 import com.alpha.SmartStudentTracker.entity.Courses;
+import com.alpha.SmartStudentTracker.exception.CourseNotFoundException;
 import com.alpha.SmartStudentTracker.repository.CoursesRepository;
 
 @Service
@@ -44,6 +45,16 @@ public class CoursesService {
 		return coursesList;
 		 
 	 }
+	 
+//	 public void editExistingCourse(Integer id,String name) { 
+//		 
+//		 ResponseStructure<Courses> rs=new ResponseStructure<Courses>();
+//		 
+//		 Courses course=coursesrepository.findByIdAndCoursename(id, name).orElseThrow( ( ) -> new CourseNotFoundException("Course Not Found"));
+//		 
+//		 
+//		 
+//	 }
 
 	 
 	 

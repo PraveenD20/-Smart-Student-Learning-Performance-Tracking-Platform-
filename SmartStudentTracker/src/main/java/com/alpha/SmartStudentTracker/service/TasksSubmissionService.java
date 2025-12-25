@@ -34,7 +34,13 @@ public class TasksSubmissionService {
 		ResponseStructure<TaskSubmission> rs=new ResponseStructure<TaskSubmission>();
 		
 		Task task=taskRepository.findById(taskSubmission.getTask().getId()).orElseThrow( ( ) -> new TaskNotFoundException("Task Not Found") );
+		task.setStatus("Submitted");
+//		taskSubmission.setTask(task);
+		
 		Users student=userRepository.findById(taskSubmission.getStudent().getId()).orElseThrow( ( ) -> new UserNotFoundException("Student Not Found"));
+		taskSubmission.setStudent(student);
+		taskSubmission.setTask(task);
+		
 		
 		Optional<TaskSubmission> opt=taskSubRepository.findByTaskAndStudent(task, student);
 		

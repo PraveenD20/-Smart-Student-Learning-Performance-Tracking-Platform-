@@ -8,7 +8,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 
 @Entity
-public class AssesmentResult {
+public class AssesmentSubmission{
  
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,20 +18,18 @@ public class AssesmentResult {
 	private Assesment assesment;
 	@ManyToOne
 	@JoinColumn(name = "student_id")
-	private Users student;
-	private Integer marksObtained;
+	private Users student; 
 	private String status;
 	
-	public AssesmentResult() {
+	public AssesmentSubmission() {
 		super();
 	}
-	
-	public AssesmentResult(Integer id, Assesment assesment, Users student, Integer marksObtained, String status) {
+
+	public AssesmentSubmission(Integer id, Assesment assesment, Users student, String status) {
 		super();
 		this.id = id;
 		this.assesment = assesment;
 		this.student = student;
-		this.marksObtained = marksObtained;
 		this.status = status;
 	}
 
@@ -59,14 +57,6 @@ public class AssesmentResult {
 		this.student = student;
 	}
 
-	public Integer getMarksObtained() {
-		return marksObtained;
-	}
-
-	public void setMarksObtained(Integer marksObtained) {
-		this.marksObtained = marksObtained;
-	}
-
 	public String getStatus() {
 		return status;
 	}
@@ -74,8 +64,5 @@ public class AssesmentResult {
 	public void setStatus(String status) {
 		this.status = status;
 	}
-    
-	
-	
-	 
+  
 }

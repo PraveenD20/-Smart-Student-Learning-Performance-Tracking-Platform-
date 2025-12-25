@@ -13,8 +13,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import com.alpha.SmartStudentTracker.controller.TrainerController;
-import com.alpha.SmartStudentTracker.dto.ResponseStructure;
-import com.alpha.SmartStudentTracker.dto.TrainersResponse;
+import com.alpha.SmartStudentTracker.dto.ResponseStructure; 
+import com.alpha.SmartStudentTracker.dto.UserResponse;
 import com.alpha.SmartStudentTracker.entity.Users;
 import com.alpha.SmartStudentTracker.exception.UserNotFoundException;
 import com.alpha.SmartStudentTracker.repository.UserRepository;
@@ -46,25 +46,26 @@ public class UserService {
 
 		return new ResponseEntity<>(rs, HttpStatus.OK);//200 OK
 	}
-
-
-	//to return the Trainers presen in the table 
-	public List<TrainersResponse> getAllTrainers() {
-		List<Users> trainerlist=userrepository.findByRole("TRAINER");
-		List<TrainersResponse> alltrainers=new ArrayList<TrainersResponse>();
-
-		for(Users user:trainerlist) {
-			TrainersResponse tc= new TrainersResponse();
-			tc.setId(user.getId());
-			tc.setName(user.getName());
-			tc.setEmail(user.getEmail());
-			alltrainers.add(tc);
-
+	
+	public List<UserResponse> getAllUsers(String role) {
+		List<Users> userList=userrepository.findByRole(role);
+		List<UserResponse> allUsers=new ArrayList<UserResponse>();
+		
+		for(Users user:userList) {
+			
+			UserResponse ur=new UserResponse();
+			ur.setId(user.getId());
+			ur.setName(user.getName());
+			ur.setEmail(user.getEmail());
+			
 		}
-		return alltrainers;
-
+		return allUsers;
 	}
 	
+	
+	
+	
+	// check weathere teh user with given credential is present or not
 	public ResponseEntity<ResponseStructure<Users>> getUser(String email,String paswrd,String Role) {
 		
 		ResponseStructure<Users> rs=new ResponseStructure<Users>();

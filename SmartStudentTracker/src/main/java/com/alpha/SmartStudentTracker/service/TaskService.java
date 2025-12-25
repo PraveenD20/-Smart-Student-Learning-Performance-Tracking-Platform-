@@ -46,6 +46,7 @@ public class TaskService {
 		task.setDate(LocalDate.now());
  
         task.setTrainer(user);
+        task.setStatus("Created");
         
         Task task2=taskRepository.save(task);
         
@@ -65,7 +66,7 @@ public class TaskService {
 		 
 		 task.setBatch(batch);
 		 task.setDate(LocalDate.now());
-		 
+		 task.setStatus("Task Assigned");
 		Task task2= taskRepository.save(task);
 		rs.setStatuscode(HttpStatus.OK.value());
 		rs.setMessage("Task Assigned to Batch");
@@ -73,7 +74,6 @@ public class TaskService {
 		
 		return new ResponseEntity<ResponseStructure<Task>>(rs,HttpStatus.OK);
 		 
-		
 	}
 	
 

@@ -89,6 +89,22 @@ public class BatcheService {
 			rs.setData(updatedStudent);
 			return new ResponseEntity<ResponseStructure<Users>>(rs,HttpStatus.OK);
 		}
+		
+		// assigning the Trainer To Batch Or assigning the Batch to the trainer
+		public ResponseEntity<ResponseStructure<String>> assignBatchToTrainer(Integer trainerid,Integer batchid) {
+			ResponseStructure<String> rs=new ResponseStructure<String>();
+			Users trainer=usersRepository.findById(trainerid).orElseThrow(( ) -> new UserNotFoundException("User Not Found"));
+			Batches batch=batchesrepository.findById(batchid).orElseThrow( ( ) -> new BatchNotFoundException("Batch Not Found"));
+			
+			trainer.setBatch(batch);
+			rs.setStatuscode(HttpStatus.OK.value());
+			rs.setMessage("Batch Aasigned to Traine");
+			rs.setData(trainer.getName()+" is Assigned to "+batch.getId());
+			
+            return new ResponseEntity<ResponseStructure<String>>(rs,HttpStatus.OK);
+			
+		}
+		
 	
 
 }

@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.alpha.SmartStudentTracker.dto.ResponseStructure;
-import com.alpha.SmartStudentTracker.entity.AssesmentResult;
+import com.alpha.SmartStudentTracker.dto.ResponseStructure; 
+import com.alpha.SmartStudentTracker.entity.AssesmentSubmission;
 import com.alpha.SmartStudentTracker.entity.TaskSubmission;
 import com.alpha.SmartStudentTracker.entity.Users;
 import com.alpha.SmartStudentTracker.repository.AttendenceRepository;
@@ -46,13 +46,29 @@ public class StudentController {
 
 	}
 	
-	@GetMapping("/getAsssementResult")
-	public ResponseEntity<ResponseStructure<AssesmentResult>> getAsssementResult(@RequestParam Integer studentid,@RequestParam Integer assesmentid) {
-		return assesmentResultService.getResult(studentid, assesmentid);		
+	
+	
+	@PostMapping("/submitTask")
+	public ResponseEntity<ResponseStructure<TaskSubmission>> submitTask(@RequestBody TaskSubmission taskSubmission) {
+	return tasksSubmissionService.submitTask(taskSubmission);	
+	
 	}
+	
     @GetMapping("/getTaskResult")
 	public ResponseEntity<ResponseStructure<TaskSubmission>> getTaskResult(@RequestParam Integer studentid,@RequestParam Integer tasksubId) {
 		return tasksSubmissionService.getTaskResult(studentid, tasksubId);
 	}	
+    
+    @PostMapping("/submitAssesment")
+	public ResponseEntity<ResponseStructure<AssesmentSubmission>> saveResult(@RequestBody AssesmentSubmission assesmentSubmission) {
+		return assesmentResultService.saveResult(assesmentSubmission);	
+	}
+    
+    @GetMapping("/getAsssementResult")
+	public ResponseEntity<ResponseStructure<AssesmentSubmission>> getAsssementResult(@RequestParam Integer studentid,@RequestParam Integer assesmentid) {
+		return assesmentResultService.getResult(studentid, assesmentid);		
+	}
  
+    
+    
 }

@@ -25,21 +25,32 @@ public class Assesment {
     @ManyToOne
     @JoinColumn(name="trainer_id")
 	private Users trainer;
-    private Integer maxMarks;
-    private LocalDate date;
+    private Integer maxmarks;
+    
+
+	private String status;
+    public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	private LocalDate date;
     
     
 	public Assesment() {
 		super();
 	}
 
-	public Assesment(Integer id, Batches batch, Subject subject, Users trainer, Integer maxMarks) {
+	public Assesment(Integer id, Batches batch, Subject subject, Users trainer,Integer maxmarks ) {
 		super();
 		this.id = id;
 		this.batch = batch;
 		this.subject = subject;
 		this.trainer = trainer;
-		this.maxMarks = maxMarks;
+        this.maxmarks=maxmarks;
 	}
 
 	public Integer getId() {
@@ -73,21 +84,21 @@ public class Assesment {
 	public void setTrainer(Users trainer) {
 		this.trainer = trainer;
 	}
-
-	public Integer getMaxMarks() {
-		return maxMarks;
-	}
-
-	public void setMaxMarks(Integer maxMarks) {
-		this.maxMarks = maxMarks;
-	}
-
+ 
 	public LocalDate getDate() {
 		return date;
 	}
 
 	public void setDate(LocalDate date) {
 		this.date = date;
+	}
+	
+	public Integer getMaxmarks() {
+		return maxmarks;
+	}
+
+	public void setMaxmarks(Integer maxmarks) {
+		this.maxmarks = maxmarks;
 	}
     
     

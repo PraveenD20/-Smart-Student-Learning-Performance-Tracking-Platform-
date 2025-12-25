@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.alpha.SmartStudentTracker.dto.AssigningBatchToStudent;
 import com.alpha.SmartStudentTracker.dto.ResponseStructure;
-import com.alpha.SmartStudentTracker.dto.TrainersResponse;
+import com.alpha.SmartStudentTracker.dto.UserResponse;
 import com.alpha.SmartStudentTracker.entity.Batches;
 import com.alpha.SmartStudentTracker.entity.Courses;
 import com.alpha.SmartStudentTracker.entity.Subject;
@@ -63,23 +63,30 @@ public class AdminController {
 
 	}
 	//method to save the course
-	@PostMapping("/SaveCourse")
+	@PostMapping("/SaveCourse") //create course
 	public ResponseEntity<ResponseStructure<Courses>> saveCourse(@RequestBody Courses course) {
 		return coursesservice.saveCourse(course);
 
 	}
     // method to get all the Trainers
 	@GetMapping("/getAllTrainers")
-	public List<TrainersResponse> GetAllTrainers() {
-		return userservice.getAllTrainers();
-
+	public List<UserResponse> getAllTrainers(@RequestParam String role) {
+		return userservice.getAllUsers(role);
 	}
+	//Api to get all the Students
+	@GetMapping("/getAllStudents")
+	public List<UserResponse> getAllStudents(String role) {
+		return userservice.getAllUsers(role);
+	}
+	
 	// method to get all the Courses
 	@GetMapping("/getAllCourses")
-	public List<Courses>  GetAllCourses() {
+	public List<Courses>  getAllCourses() {
 		return coursesservice.getAllCourse();
-		
 	}
+	
+ 
+	
 	@PostMapping("/createBatches")
 	public ResponseEntity<ResponseStructure<Batches>> createBatches(@RequestBody Batches batch) {
 		return  batchservice.saveBatches(batch);
@@ -96,6 +103,12 @@ public class AdminController {
 	            request.getBatchId()
 	    );
 	}
+	 
+	public void assignTrainerToBatch(@RequestParam Integer trainerid,@RequestParam Integer batchid) {
+		
+		
+	}
+	
 	@PostMapping("/saveSubject")
 	public ResponseEntity<ResponseStructure<Subject>> saveSubject(@RequestBody Subject subject) {
 		return subjectService.saveSubject(subject);

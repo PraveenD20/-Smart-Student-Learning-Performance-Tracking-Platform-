@@ -78,4 +78,15 @@ public class GlobalExceptionHandler {
     	return new ResponseEntity<ResponseStructure<String>>(rs,HttpStatus.NOT_FOUND);
     }
    
+    @ExceptionHandler(InvalidDataException.class)
+    public ResponseEntity<String> handleInvalidDataException( InvalidDataException e) {
+    	ResponseStructure<String> rs=new ResponseStructure<String>();
+    	
+    	rs.setStatuscode(HttpStatus.BAD_REQUEST.value());
+    	rs.setMessage("Invalid Data Insertion");
+    	rs.setData("Something went wrong");
+    	
+    	return new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
+    }
+    
 }

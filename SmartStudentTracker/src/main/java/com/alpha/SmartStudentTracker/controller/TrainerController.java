@@ -14,14 +14,17 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.alpha.SmartStudentTracker.dto.ResponseStructure;
 import com.alpha.SmartStudentTracker.entity.Assesment;
-import com.alpha.SmartStudentTracker.entity.AssesmentResult;
+import com.alpha.SmartStudentTracker.entity.AssesmentSubmission;
 import com.alpha.SmartStudentTracker.entity.Attendence;
+import com.alpha.SmartStudentTracker.entity.Review;
 import com.alpha.SmartStudentTracker.entity.Task;
 import com.alpha.SmartStudentTracker.entity.TaskSubmission;
 import com.alpha.SmartStudentTracker.entity.Users;
+import com.alpha.SmartStudentTracker.repository.ReviewRepository;
 import com.alpha.SmartStudentTracker.service.AssesmentResultService;
 import com.alpha.SmartStudentTracker.service.AssesmentService;
 import com.alpha.SmartStudentTracker.service.AttendenceService;
+import com.alpha.SmartStudentTracker.service.ReviewService;
 import com.alpha.SmartStudentTracker.service.TaskService;
 import com.alpha.SmartStudentTracker.service.TasksSubmissionService;
 import com.alpha.SmartStudentTracker.service.UserService;
@@ -42,6 +45,8 @@ public class TrainerController {
     private TasksSubmissionService tasksSubmissionService;
 	@Autowired
     private UserService userService;
+	@Autowired
+	private ReviewService reviewService;
     
     @GetMapping("/login")
 	public ResponseEntity<ResponseStructure<Users>> login(@RequestParam String email,@RequestParam String password,@RequestParam String role) {
@@ -64,10 +69,10 @@ public class TrainerController {
 		return assesmentService.assignAssesmentToBatch(assesmentid, batchid);
 	}
 	
-	@PostMapping("/saveResult")
-	public ResponseEntity<ResponseStructure<AssesmentResult>> saveResult(@RequestBody AssesmentResult assesmentResult) {
-		return assesmentResultService.saveResult(assesmentResult);
-	} 
+//	@PostMapping("/saveResult")
+//	public ResponseEntity<ResponseStructure<AssesmentSubmission>> saveResult(@RequestBody AssesmentSubmission assesmentSubmission) {
+//		return assesmentResultService.saveResult(assesmentSubmission);
+//	} 
 	@PostMapping("/createTask")
 	public ResponseEntity<ResponseStructure<Task>> createTask(@RequestBody Task task) {
 		 return taskService.saveTask(task);
@@ -77,11 +82,17 @@ public class TrainerController {
 		
 		return taskService.assignTaskToBatch(taskid, batchid);
 	}
-   
-	@PostMapping("/submitTask")
-	public ResponseEntity<ResponseStructure<TaskSubmission>> submitTask(@RequestBody TaskSubmission taskSubmission) {
-	return tasksSubmissionService.submitTask(taskSubmission);	
-	
+    @PostMapping("/review")
+	public ResponseEntity<ResponseStructure<Review>> reviewTask(@RequestBody Review review) {
+		return reviewService.reviewTaskAssesment(review);
 	}
+	
+	
+//	@PostMapping("/submitTask")
+//	public ResponseEntity<ResponseStructure<TaskSubmission>> submitTask(@RequestBody TaskSubmission taskSubmission) {
+//	return tasksSubmissionService.submitTask(taskSubmission);	
+//	
+//	}
 
+    
 }

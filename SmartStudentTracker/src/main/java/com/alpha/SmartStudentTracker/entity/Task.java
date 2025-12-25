@@ -23,6 +23,8 @@ public class Task {
 	@ManyToOne
 	@JoinColumn(name="trainer_id")
 	private Users trainer;
+	@JoinColumn(name="status")
+	private String status;
 	
 	public Task() {
 		super();
@@ -70,6 +72,12 @@ public class Task {
 	}
 	public void setTrainer(Users trainer) {
 		this.trainer = trainer;
+	}
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
 	}
 	
 	

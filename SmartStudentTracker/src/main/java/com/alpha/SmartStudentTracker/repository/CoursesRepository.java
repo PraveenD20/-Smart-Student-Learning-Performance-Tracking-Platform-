@@ -10,6 +10,6 @@ import com.alpha.SmartStudentTracker.entity.Courses;
 @Repository
 public interface CoursesRepository extends JpaRepository<Courses, Integer> {
 	Optional<Courses> findByCoursename(String coursename);
-   
+    Optional<Courses> findByIdAndCoursename(Integer id,String coursename);
 
 }

@@ -2,7 +2,7 @@ package com.alpha.SmartStudentTracker.dto;
 
 import org.hibernate.id.IntegralDataTypeHolder;
 
-public class TrainersResponse {
+public class UserResponse {
 	
 	private Integer id;
 	private String name;

@@ -10,8 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.alpha.SmartStudentTracker.dto.ResponseStructure;
-import com.alpha.SmartStudentTracker.entity.Assesment;
-import com.alpha.SmartStudentTracker.entity.AssesmentResult;
+import com.alpha.SmartStudentTracker.entity.Assesment; 
 import com.alpha.SmartStudentTracker.entity.Batches;
 import com.alpha.SmartStudentTracker.entity.Subject;
 import com.alpha.SmartStudentTracker.entity.Users;
@@ -20,7 +19,8 @@ import com.alpha.SmartStudentTracker.exception.BatchNotFoundException;
 import com.alpha.SmartStudentTracker.exception.SubjectNotFoundException;
 import com.alpha.SmartStudentTracker.exception.UserNotFoundException;
 import com.alpha.SmartStudentTracker.repository.AssesmentRepository;
-import com.alpha.SmartStudentTracker.repository.AssesmentResultRepository;
+//import com.alpha.SmartStudentTracker.repository.AssesmentResultRepository;
+import com.alpha.SmartStudentTracker.repository.AssesmentSubmissionRepository;
 import com.alpha.SmartStudentTracker.repository.BatchesRepository;
 import com.alpha.SmartStudentTracker.repository.SubjectRepository;
 import com.alpha.SmartStudentTracker.repository.UserRepository;
@@ -36,7 +36,7 @@ public class AssesmentService {
 	@Autowired
 	private UserRepository userRepository;
 	@Autowired
-	private AssesmentResultRepository assesmentResultRepository;
+	private  AssesmentSubmissionRepository assesmentSubmissionRepository;
 	
 	public ResponseEntity<ResponseStructure<Assesment>> saveAssesment(Assesment assesment) {
 		assesment.setDate(LocalDate.now());
@@ -48,6 +48,7 @@ public class AssesmentService {
  
         assesment.setSubject(subject);
         assesment.setTrainer(trainer);
+        assesment.setStatus("Created");
           
         Optional<Assesment> opt=assesmentRepository.findByTrainerAndSubjectAndDate(trainer, subject, assesment.getDate());
         
@@ -72,6 +73,7 @@ public class AssesmentService {
 		Batches batch=batchesRepository.findById(batchid).orElseThrow( ( ) -> new BatchNotFoundException("Batch Not Found"));
 		
 		assesment.setBatch(batch);
+		assesment.setStatus("Assigned to Batch");
 		
 		Assesment assesment2=assesmentRepository.save(assesment);
 		
