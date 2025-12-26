@@ -89,4 +89,14 @@ public class GlobalExceptionHandler {
     	return new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
     }
     
+    @ExceptionHandler(AssesmentSubNotFoundException.class)
+    public ResponseEntity<ResponseStructure<String>> handleAssesmentSubNotFoundException(AssesmentSubNotFoundException e) {
+    	ResponseStructure<String> rs=new ResponseStructure<String>();
+    	
+    	rs.setStatuscode(HttpStatus.NOT_FOUND.value());
+    	rs.setMessage(e.getMessage());
+    	rs.setData("Submit Assesment/Task");
+    	
+    	return new ResponseEntity<ResponseStructure<String>>(rs,HttpStatus.NOT_FOUND);
+    }
 }

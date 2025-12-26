@@ -16,6 +16,8 @@ public class Review {
 	private Integer subid;
 	private Integer marksObtained;
 	private String review;
+
+	private Integer assesmentid;
 	
 	public Review() {
 		super();
@@ -69,5 +71,15 @@ public class Review {
 	public void setReview(String review) {
 		this.review = review;
 	}
+ 
+
+	public Integer getAssesmentid() {
+		return assesmentid;
+	}
+
+	public void setAssesmentid(Integer assesmentid) {
+		this.assesmentid = assesmentid;
+	}
+	
  
 }

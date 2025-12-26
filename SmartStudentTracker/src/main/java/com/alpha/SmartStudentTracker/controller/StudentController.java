@@ -1,6 +1,7 @@
 package com.alpha.SmartStudentTracker.controller;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -12,13 +13,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.alpha.SmartStudentTracker.dto.LeaderBoardResponse;
 import com.alpha.SmartStudentTracker.dto.ResponseStructure; 
 import com.alpha.SmartStudentTracker.entity.AssesmentSubmission;
 import com.alpha.SmartStudentTracker.entity.TaskSubmission;
 import com.alpha.SmartStudentTracker.entity.Users;
-import com.alpha.SmartStudentTracker.repository.AttendenceRepository;
+import com.alpha.SmartStudentTracker.repository.AttendenceRepository;			
 import com.alpha.SmartStudentTracker.service.AssesmentResultService;
 import com.alpha.SmartStudentTracker.service.AttendenceService;
+import com.alpha.SmartStudentTracker.service.LeaderBoardService;
 import com.alpha.SmartStudentTracker.service.TasksSubmissionService;
 import com.alpha.SmartStudentTracker.service.UserService;
 
@@ -34,6 +37,8 @@ public class StudentController {
 	private AssesmentResultService assesmentResultService;
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private LeaderBoardService leaderBoardService;
 	
 	@GetMapping("/login")
 	public ResponseEntity<ResponseStructure<Users>> login(@RequestParam String email,@RequestParam String password,@RequestParam String role) {
@@ -45,9 +50,7 @@ public class StudentController {
 		return attendenceService.getAttendence(studentId,date);
 
 	}
-	
-	
-	
+	 
 	@PostMapping("/submitTask")
 	public ResponseEntity<ResponseStructure<TaskSubmission>> submitTask(@RequestBody TaskSubmission taskSubmission) {
 	return tasksSubmissionService.submitTask(taskSubmission);	
@@ -68,6 +71,11 @@ public class StudentController {
 	public ResponseEntity<ResponseStructure<AssesmentSubmission>> getAsssementResult(@RequestParam Integer studentid,@RequestParam Integer assesmentid) {
 		return assesmentResultService.getResult(studentid, assesmentid);		
 	}
+    
+    @GetMapping("/leaderBoard")
+    public List<LeaderBoardResponse> viewLeaderBoard(@RequestParam String submissiontype,@RequestParam Integer subid) {
+    	return leaderBoardService.getLeaderboardForAssignment(submissiontype,subid );
+    }
  
     
     

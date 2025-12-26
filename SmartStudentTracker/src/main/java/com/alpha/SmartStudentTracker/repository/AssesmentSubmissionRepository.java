@@ -13,4 +13,6 @@ import com.alpha.SmartStudentTracker.entity.Users;
 public interface AssesmentSubmissionRepository extends JpaRepository<AssesmentSubmission, Integer> {
    
 	Optional<AssesmentSubmission> findByStudentAndAssesment(Users student,Assesment assesment);
+	
+	void deleteByAssesmentId(Integer assesmentid);
 }

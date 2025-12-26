@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.alpha.SmartStudentTracker.dto.ResponseStructure;
+import com.alpha.SmartStudentTracker.dto.UpdateAssesmentDTO;
 import com.alpha.SmartStudentTracker.entity.Assesment;
 import com.alpha.SmartStudentTracker.entity.AssesmentSubmission;
 import com.alpha.SmartStudentTracker.entity.Attendence;
@@ -87,12 +88,10 @@ public class TrainerController {
 		return reviewService.reviewTaskAssesment(review);
 	}
 	
-	
-//	@PostMapping("/submitTask")
-//	public ResponseEntity<ResponseStructure<TaskSubmission>> submitTask(@RequestBody TaskSubmission taskSubmission) {
-//	return tasksSubmissionService.submitTask(taskSubmission);	
-//	
-//	}
-
+    @PostMapping("/updateAssesment")
+    public ResponseEntity<ResponseStructure<Assesment>> updateAssesment(@RequestBody UpdateAssesmentDTO upAssesmentDTO) {
+    	return assesmentService.updateAssesment(upAssesmentDTO);
+    }
+	 
     
 }

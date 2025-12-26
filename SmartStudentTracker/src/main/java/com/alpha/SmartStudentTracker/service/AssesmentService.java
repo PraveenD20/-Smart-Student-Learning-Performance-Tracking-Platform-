@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.alpha.SmartStudentTracker.dto.ResponseStructure;
+import com.alpha.SmartStudentTracker.dto.UpdateAssesmentDTO;
 import com.alpha.SmartStudentTracker.entity.Assesment; 
 import com.alpha.SmartStudentTracker.entity.Batches;
 import com.alpha.SmartStudentTracker.entity.Subject;
@@ -83,6 +84,35 @@ public class AssesmentService {
 		
 		return new ResponseEntity<ResponseStructure<Assesment>>(rs, HttpStatus.OK); 	
 		}
+	
+	public ResponseEntity<ResponseStructure<Assesment>> updateAssesment(UpdateAssesmentDTO upAssesmentDTO) {
+		ResponseStructure<Assesment> rs=new ResponseStructure<Assesment>();
+		 Assesment assesment=assesmentRepository.findById(upAssesmentDTO.getAssesmentid())
+				 .orElseThrow( ( )->new AssesmentNotFoundException("Assesment Not Found"));
+		if(upAssesmentDTO.getBatch()!=null) {
+			assesment.setBatch(upAssesmentDTO.getBatch());
+		}
+		if(upAssesmentDTO.getMaxmarks()!=null) {
+			assesment.setMaxmarks(upAssesmentDTO.getMaxmarks());
+		}
+		if(upAssesmentDTO.getSubject()!=null) {
+			assesment.setSubject(upAssesmentDTO.getSubject());
+		}
+		if(upAssesmentDTO.getTrainer()!=null) {
+			assesment.setTrainer(null);
+		}
+	    assesment.setDate(LocalDate.now());
+	    assesment.setStatus("Created-Updated");
+	    
+	   Assesment assesment2= assesmentRepository.save(assesment);
+	   
+	   rs.setStatuscode(HttpStatus.OK.value());
+	   rs.setMessage("Assesment Updated");
+       rs.setData(assesment2);
+       
+       return new ResponseEntity<ResponseStructure<Assesment>>(rs,HttpStatus.OK);
+	    
+	}
 	
 	
 

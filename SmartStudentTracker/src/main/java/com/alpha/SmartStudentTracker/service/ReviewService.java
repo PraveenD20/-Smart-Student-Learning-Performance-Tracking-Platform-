@@ -10,14 +10,19 @@ import org.springframework.stereotype.Service;
 
 import com.alpha.SmartStudentTracker.dto.ResponseStructure;
 import com.alpha.SmartStudentTracker.entity.Assesment;
+import com.alpha.SmartStudentTracker.entity.AssesmentSubmission;
 import com.alpha.SmartStudentTracker.entity.Review;
 import com.alpha.SmartStudentTracker.entity.Task;
+import com.alpha.SmartStudentTracker.entity.TaskSubmission;
 import com.alpha.SmartStudentTracker.exception.AssesmentNotFoundException;
+import com.alpha.SmartStudentTracker.exception.AssesmentSubNotFoundException;
 import com.alpha.SmartStudentTracker.exception.InvalidDataException;
 import com.alpha.SmartStudentTracker.exception.TaskNotFoundException;
 import com.alpha.SmartStudentTracker.repository.AssesmentRepository;
+import com.alpha.SmartStudentTracker.repository.AssesmentSubmissionRepository;
 import com.alpha.SmartStudentTracker.repository.ReviewRepository;
 import com.alpha.SmartStudentTracker.repository.TaskRepository;
+import com.alpha.SmartStudentTracker.repository.TaskSubRepository;
 
 @Service
 public class ReviewService {
@@ -26,7 +31,11 @@ public class ReviewService {
 	@Autowired
 	private TaskRepository taskRepository;
 	@Autowired
+	private TaskSubRepository taskSubRepository;
+	@Autowired
 	private AssesmentRepository assesmentRepository;
+	@Autowired
+	private AssesmentSubmissionRepository assesmentSubmissionRepository;
 	
 	
 	public ResponseEntity<ResponseStructure<Review>> reviewTaskAssesment(Review review) {
@@ -48,6 +57,9 @@ public class ReviewService {
 		Integer id=review.getSubid();
 		
 		  if(subtype1.equals("task")) {
+			  
+			TaskSubmission taskSubmission=taskSubRepository.findById(id)
+					.orElseThrow( ( )-> new AssesmentSubNotFoundException("Task not at Submitted")); 
 			
 			Task task=taskRepository.findById(id).orElseThrow( ( )-> new TaskNotFoundException("Task Not Found "));
 			task.setStatus("Reviewed");
@@ -63,8 +75,14 @@ public class ReviewService {
 		}
 		  if(subtype1.equals("assesment")) {
 				
-				Assesment assesment=assesmentRepository.findById(id).orElseThrow( ( )-> new AssesmentNotFoundException("Assesment Not Found "));
-				assesment.setStatus("Reviewed");
+//				Assesment assesment=assesmentRepository.findById(id).orElseThrow( ( )-> new AssesmentNotFoundException("Assesment Not Found "));
+//				assesment.setStatus("Reviewed"); 
+			  
+			  AssesmentSubmission asSubmission=assesmentSubmissionRepository.findById(id)
+					  .orElseThrow( ( )-> new AssesmentSubNotFoundException("Assement Not at Submitted"));
+			  Assesment assesment=assesmentRepository.findById(asSubmission.getAssesment().getId()).orElseThrow( ( )-> new AssesmentNotFoundException("Assesment Not Found "));
+			  assesment.setStatus("Reviewed"); 
+			  
 				
 				Integer marks=review.getMarksObtained();
 				Integer maxmarks=assesment.getMaxmarks();
