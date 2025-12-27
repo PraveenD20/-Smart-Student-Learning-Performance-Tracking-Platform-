@@ -41,9 +41,9 @@ public class ReviewService {
 	public ResponseEntity<ResponseStructure<Review>> reviewTaskAssesment(Review review) {
 		
 		ResponseStructure<Review> rs=new ResponseStructure<Review>();
-		
+		//getting the review based on the submission tyoe and submission id
 		Optional<Review> opt=reviewRepository.findBySubmissiontypeAndSubid(review.getSubmissiontype(), review.getSubid());
-		
+		// if already reviewd do not review again
 		if(opt.isPresent()) {
 			 
 			rs.setStatuscode(HttpStatus.CONFLICT.value());
@@ -55,7 +55,7 @@ public class ReviewService {
 		
 		String subtype1=review.getSubmissiontype().toLowerCase();
 		Integer id=review.getSubid();
-		
+		// check and review based on the type (assessment or task)
 		  if(subtype1.equals("task")) {
 			  
 			TaskSubmission taskSubmission=taskSubRepository.findById(id)
@@ -86,6 +86,8 @@ public class ReviewService {
 				
 				Integer marks=review.getMarksObtained();
 				Integer maxmarks=assesment.getMaxmarks();
+				
+				// if the assigned marks or greater than the max marks throw an  exception
 				if(marks>maxmarks || marks<0) throw new  InvalidDataException("You can not award More than the maximum marks/ Less than the 0");
 				 
 				Review review2=reviewRepository.save(review);
@@ -97,8 +99,26 @@ public class ReviewService {
 				return new ResponseEntity<ResponseStructure<Review>>(rs,HttpStatus.OK);
 			 	 
 			}
-		return null;
+		return null; // in worst case if everything goes wrong rare case
 
     }
+	
+	// get the reports ca
+	public ResponseEntity<ResponseStructure<String>> getReports(Integer assesmentid,Integer submissionid) {
+		
+		ResponseStructure<String> rs=new ResponseStructure<String>();
+		 
+		//get the review if not throw error
+		Review review=reviewRepository.findByAssesmentidAndSubid(assesmentid, submissionid)
+				.orElseThrow( ( )-> new AssesmentSubNotFoundException("Review Not Found") );
+		
+		rs.setStatuscode(HttpStatus.OK.value());
+		rs.setMessage(review.getReview());
+		rs.setData("Marks obtained : "+review.getMarksObtained());
+		
+		return new ResponseEntity<ResponseStructure<String>>(rs,HttpStatus.OK);
+		
+		
+	}
 
 }

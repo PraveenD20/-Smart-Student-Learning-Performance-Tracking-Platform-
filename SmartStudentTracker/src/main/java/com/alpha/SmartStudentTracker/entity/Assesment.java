@@ -10,6 +10,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.Positive;
 
 @Entity
 public class Assesment {
@@ -25,6 +27,8 @@ public class Assesment {
     @ManyToOne
     @JoinColumn(name="trainer_id")
 	private Users trainer;
+    @Positive
+    @Min(10)
     private Integer maxmarks;
     
 

@@ -1,7 +1,11 @@
 package com.alpha.SmartStudentTracker.dto;
 
+import jakarta.validation.constraints.NotNull;
+
 public class CourseResponse {
+ 
 	private Integer id;
+ 
 	private String coursename;
 	public Integer getId() {
 		return id;

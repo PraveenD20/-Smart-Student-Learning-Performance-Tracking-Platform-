@@ -1,8 +1,11 @@
 package com.alpha.SmartStudentTracker.dto;
 
+import jakarta.validation.constraints.NotNull;
+
 public class AssignTaskToBatch {
-	
+	@NotNull
 	private Integer taskid;
+	@NotNull
 	private Integer batchid;
 	
 	public AssignTaskToBatch() {

@@ -21,8 +21,10 @@ public class SubjectService {
 	@Autowired
 	private CoursesRepository coursesRepository;
 	
+	//save the subject
 	public ResponseEntity<ResponseStructure<Subject>> saveSubject(Subject subject) {
 		ResponseStructure<Subject> rs=new ResponseStructure<Subject>();
+		
 		Integer course_id=subject.getCourse().getId();
 		
 		Courses course=coursesRepository.findById(course_id)

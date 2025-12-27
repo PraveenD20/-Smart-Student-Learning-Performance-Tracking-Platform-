@@ -1,6 +1,7 @@
 package com.alpha.SmartStudentTracker.entity;
 
 import org.hibernate.annotations.ManyToAny;
+import org.hibernate.validator.constraints.Length;
 import org.springframework.boot.webmvc.autoconfigure.WebMvcProperties.Apiversion.Use;
 
 import jakarta.persistence.Entity;
@@ -10,6 +11,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.validation.constraints.NotEmpty;
 
 @Entity
 public class Batches {
@@ -17,7 +19,8 @@ public class Batches {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-
+    @NotEmpty
+    @Length(min = 3)
     private String batchname;
 
     @ManyToOne

@@ -58,6 +58,7 @@ public class UserService {
 			ur.setName(user.getName());
 			ur.setEmail(user.getEmail());
 			
+			allUsers.add(ur);
 		}
 		return allUsers;
 	}

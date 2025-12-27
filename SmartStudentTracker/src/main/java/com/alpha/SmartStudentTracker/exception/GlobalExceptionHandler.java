@@ -10,6 +10,7 @@ import com.alpha.SmartStudentTracker.dto.ResponseStructure;
 @ControllerAdvice
 public class GlobalExceptionHandler {
 	
+	//exception handler to handle the UserNotfound
 	@ExceptionHandler(UserNotFoundException.class)
 	public ResponseEntity<ResponseStructure<String>> handleUserNotFoundException( UserNotFoundException e) {
 		ResponseStructure<String> rs=new ResponseStructure<String>();

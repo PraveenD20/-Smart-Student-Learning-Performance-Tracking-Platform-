@@ -1,10 +1,13 @@
 package com.alpha.SmartStudentTracker.entity;
 
+import org.hibernate.validator.constraints.Length;
+
 import jakarta.annotation.Generated;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.validation.constraints.NotEmpty;
 
 @Entity
 public class Courses {
@@ -12,7 +15,10 @@ public class Courses {
 	//course id based
 	@Id
 	private Integer id;
+	@NotEmpty
+	@Length(min=3)
 	private String coursename;
+	@NotEmpty 
 	private String description;
 	public Courses() {
 		super();

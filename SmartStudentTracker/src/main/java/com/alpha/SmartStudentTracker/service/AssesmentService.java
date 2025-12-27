@@ -50,7 +50,8 @@ public class AssesmentService {
         assesment.setSubject(subject);
         assesment.setTrainer(trainer);
         assesment.setStatus("Created");
-          
+         
+        //check wether the assesment is already present if present dont create again if not save it
         Optional<Assesment> opt=assesmentRepository.findByTrainerAndSubjectAndDate(trainer, subject, assesment.getDate());
         
 		if(opt.isPresent()) {
@@ -58,6 +59,8 @@ public class AssesmentService {
 			rs.setMessage("Already Exist");
 			rs.setData( opt.get());
 		}
+		//save assesment
+		
 		Assesment assesment2=assesmentRepository.save(assesment);
 		rs.setStatuscode(HttpStatus.OK.value());
 		rs.setMessage("Assesment Saved");
@@ -66,16 +69,20 @@ public class AssesmentService {
 		return new ResponseEntity<ResponseStructure<Assesment>>(rs,HttpStatus.OK);
 	}
 	
+	//assigning the assesment to the batch
+	
 	public ResponseEntity<ResponseStructure<Assesment>> assignAssesmentToBatch( Integer assesmentid,Integer batchid) {
 	
 		ResponseStructure<Assesment> rs=new ResponseStructure<Assesment>();
 		
+		//fetching the assesment and batch if they are present if not throw exception
 		Assesment assesment=assesmentRepository.findById(assesmentid).orElseThrow( ( )-> new AssesmentNotFoundException("Assesment Not Found") );
 		Batches batch=batchesRepository.findById(batchid).orElseThrow( ( ) -> new BatchNotFoundException("Batch Not Found"));
-		
+		//if present assign the batch to assesment and set the status as created
 		assesment.setBatch(batch);
 		assesment.setStatus("Assigned to Batch");
 		
+		//save the assessment or update
 		Assesment assesment2=assesmentRepository.save(assesment);
 		
 		rs.setStatuscode(HttpStatus.OK.value());
@@ -87,8 +94,13 @@ public class AssesmentService {
 	
 	public ResponseEntity<ResponseStructure<Assesment>> updateAssesment(UpdateAssesmentDTO upAssesmentDTO) {
 		ResponseStructure<Assesment> rs=new ResponseStructure<Assesment>();
+		
+		//update any existing assesment using dto as we dont know what they want to update
+		//if the assessment itself not present we will throw an exception
 		 Assesment assesment=assesmentRepository.findById(upAssesmentDTO.getAssesmentid())
 				 .orElseThrow( ( )->new AssesmentNotFoundException("Assesment Not Found"));
+		 //set the or the values which are not null meaning from the dto we will get some data which to be updated 
+		 //they should only have update keep the remaining same 
 		if(upAssesmentDTO.getBatch()!=null) {
 			assesment.setBatch(upAssesmentDTO.getBatch());
 		}
@@ -101,9 +113,11 @@ public class AssesmentService {
 		if(upAssesmentDTO.getTrainer()!=null) {
 			assesment.setTrainer(null);
 		}
+		//if updated then we have to set the date on the day wich updated as well as set the status as updated
 	    assesment.setDate(LocalDate.now());
 	    assesment.setStatus("Created-Updated");
 	    
+	    //update the assesment
 	   Assesment assesment2= assesmentRepository.save(assesment);
 	   
 	   rs.setStatuscode(HttpStatus.OK.value());

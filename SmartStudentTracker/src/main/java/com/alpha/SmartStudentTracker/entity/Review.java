@@ -6,15 +6,22 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 
 @Entity
 public class Review {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
+	@NotNull
 	private String submissiontype; //task or assesment
+	@NotNull
 	private Integer subid;
+	@Positive
 	private Integer marksObtained;
+	@NotEmpty
 	private String review;
 
 	private Integer assesmentid;

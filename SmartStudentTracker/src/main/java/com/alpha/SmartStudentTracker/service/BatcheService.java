@@ -29,9 +29,14 @@ public class BatcheService {
 	@Autowired
 	private UserRepository usersRepository;
 	
+	
+	//create the new batches
 		public ResponseEntity<ResponseStructure<Batches>> saveBatches(Batches batch) {
-			Optional<Batches> opt=batchesrepository.findByBatchname(batch.getBatchname());
+			
 			ResponseStructure<Batches> rs=new ResponseStructure<Batches>();
+		// check wether the batch is already saved if saved dont save again
+			Optional<Batches> opt=batchesrepository.findByBatchname(batch.getBatchname());
+			
 			
 			 if(opt.isPresent()) {
 				 rs.setStatuscode(HttpStatus.CONFLICT.value());
@@ -40,7 +45,6 @@ public class BatcheService {
 				 return new ResponseEntity<ResponseStructure<Batches>>(rs,HttpStatus.CONFLICT); //209 conflict
 			 }
 			 
-			 //   IMPORTANT PART
 			 //   fetching the details or like basic details of the trainer and users from the db
 			    Integer courseId = batch.getCourse().getId();
 			    Integer trainerId = batch.getTrainer().getId();
@@ -54,7 +58,7 @@ public class BatcheService {
 			    Users trainer = usersRepository.findById(trainerId)
 			            .orElseThrow(() -> new UserNotFoundException("Trainer not found"));
 
-			    // attach managed entities
+			    // attach the course and trainer
 			    batch.setCourse(course);
 			    batch.setTrainer(trainer);
 			 

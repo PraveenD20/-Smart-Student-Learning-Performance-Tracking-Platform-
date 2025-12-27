@@ -6,9 +6,10 @@ import com.alpha.SmartStudentTracker.entity.Users;
 
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.validation.constraints.NotNull;
 
 public class UpdateAssesmentDTO {
-	
+	@NotNull
 	private Integer assesmentid;
 	private Batches batch;
     private Subject subject;

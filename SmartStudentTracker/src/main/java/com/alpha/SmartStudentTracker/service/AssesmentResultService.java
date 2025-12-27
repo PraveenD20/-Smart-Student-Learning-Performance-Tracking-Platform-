@@ -35,11 +35,11 @@ public class AssesmentResultService {
 		Users studnet=userRepository.findById(assesmentResult.getStudent().getId()).orElseThrow( ( ) -> new UserNotFoundException("User Not Found"));
 		Assesment assesment=assesmentRepository.findById(assesmentResult.getAssesment().getId()).orElseThrow( ( ) -> new AssesmentNotFoundException("User Not Found") );
 
-//		
+       //Fetching the assesment submission based on the assesmentid ans studentid
 		assesment.setStatus("Submitted");
 		Optional<AssesmentSubmission> opt= assesmentSubmissionRepository.findByStudentAndAssesment(studnet,assesment);
 		
-		
+		//set the values 
 		assesmentResult.setAssesment(assesment);
 		assesmentResult.setStudent(studnet);
 		
@@ -49,10 +49,13 @@ public class AssesmentResultService {
 			rs.setData(opt.get());
 			return new ResponseEntity<ResponseStructure<AssesmentSubmission>>(rs,HttpStatus.CONFLICT);
 		}
+		
+		//save the assesment submission 
 		AssesmentSubmission assesmentResult2= assesmentSubmissionRepository.save(assesmentResult);
-		rs.setStatuscode(HttpStatus.OK.value());
+		rs.setStatuscode(HttpStatus.OK.value());//200
 		rs.setMessage("Result saved");
 		rs.setData(assesmentResult2);
+		
 		return new ResponseEntity<ResponseStructure<AssesmentSubmission>>(rs,HttpStatus.OK);
 		
 		
@@ -62,9 +65,11 @@ public class AssesmentResultService {
 		
 	    ResponseStructure<AssesmentSubmission> rs=new ResponseStructure<AssesmentSubmission>();
 	    
+	   //fetch the data of student and assesment based on given parameters(student id,assesment id)
 	    Users student=userRepository.findById(studentid).orElseThrow( ( ) -> new UserNotFoundException("Student Not Found"));
 	    Assesment assesment=assesmentRepository.findById(assesmentid).orElseThrow( ( )-> new AssesmentNotFoundException("Assesment Not Found") );
 	    
+	    //fetch the assesment result if not through exception
 	    AssesmentSubmission assesmentResult= assesmentSubmissionRepository.findByStudentAndAssesment(student, assesment).orElseThrow( ( )-> new RuntimeException("Assesment Results Not Found") ) ;
 		
 	    rs.setStatuscode(HttpStatus.OK.value());

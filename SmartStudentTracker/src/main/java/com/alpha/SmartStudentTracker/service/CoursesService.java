@@ -32,6 +32,8 @@ public class CoursesService {
 			 rs.setData(opt.get());
 			 return new ResponseEntity<ResponseStructure<Courses>>(rs,HttpStatus.CONFLICT); //209 conflict
 		 }
+		 
+		 //save course 
 		 Courses saved=coursesrepository.save(course);
 		 rs.setStatuscode(HttpStatus.OK.value());
 		 rs.setMessage("Course is saved with"+course.getId());
@@ -39,7 +41,7 @@ public class CoursesService {
 		 return new ResponseEntity<ResponseStructure<Courses>>(rs,HttpStatus.OK); //200 OK
 	 }
 	 
-	 
+	 // to get  all the courses available in the db
 	 public List<Courses> getAllCourse() {
 		List<Courses> coursesList=coursesrepository.findAll();
 		return coursesList;

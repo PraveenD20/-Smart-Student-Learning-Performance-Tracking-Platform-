@@ -13,6 +13,8 @@ public interface ReviewRepository extends JpaRepository<Review, Integer> {
 	
 	Optional<Review> findBySubmissiontypeAndSubid(String submissiontype,Integer subid);
 	
+	Optional<Review> findByAssesmentidAndSubid(Integer assesmentid,Integer subid);
+	
 	List<Review> findBySubmissiontypeAndAssesmentid(String submissiontype,Integer assesmentid);
 
 

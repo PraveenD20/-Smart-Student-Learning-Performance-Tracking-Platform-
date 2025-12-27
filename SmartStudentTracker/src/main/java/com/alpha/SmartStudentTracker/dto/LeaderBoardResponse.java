@@ -6,6 +6,7 @@ public class LeaderBoardResponse {
 	private Integer studentid;
 	private Integer totalMarks;
 	private String studentName;
+	
 	public Integer getRank() {
 		return rank;
 	}
@@ -32,4 +33,5 @@ public class LeaderBoardResponse {
 	}
 	
 
+  
 }

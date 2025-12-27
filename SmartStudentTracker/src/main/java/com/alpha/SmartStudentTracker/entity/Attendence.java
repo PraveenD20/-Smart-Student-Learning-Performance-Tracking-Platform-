@@ -10,6 +10,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.validation.constraints.NotEmpty;
 
 @Entity
 public class Attendence {
@@ -17,6 +18,7 @@ public class Attendence {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private LocalDate date; //local date will be set in the service logic
+	@NotEmpty
 	private String status;
 	@ManyToOne
 	@JoinColumn(name="student_id")

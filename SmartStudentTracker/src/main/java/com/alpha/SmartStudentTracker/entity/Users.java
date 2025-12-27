@@ -9,20 +9,27 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Size;
 
 @Entity
 public class Users{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-
+    @Length(min=3)
 	private String name;
-
+    @Size(min=10,max=10)
 	private String contact;
+    @Email
 	private String email;
+    @NotEmpty
+    @Length(min=4)
 	private String password;
+    @NotEmpty
 	private String role;
 	@ManyToOne
 	@JoinColumn(name="batch_id")

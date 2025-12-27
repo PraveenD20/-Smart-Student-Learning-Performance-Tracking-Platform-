@@ -22,6 +22,7 @@ import com.alpha.SmartStudentTracker.repository.AttendenceRepository;
 import com.alpha.SmartStudentTracker.service.AssesmentResultService;
 import com.alpha.SmartStudentTracker.service.AttendenceService;
 import com.alpha.SmartStudentTracker.service.LeaderBoardService;
+import com.alpha.SmartStudentTracker.service.ReviewService;
 import com.alpha.SmartStudentTracker.service.TasksSubmissionService;
 import com.alpha.SmartStudentTracker.service.UserService;
 
@@ -39,6 +40,8 @@ public class StudentController {
 	private UserService userService;
 	@Autowired
 	private LeaderBoardService leaderBoardService;
+	@Autowired
+	private ReviewService reviewService;
 	
 	@GetMapping("/login")
 	public ResponseEntity<ResponseStructure<Users>> login(@RequestParam String email,@RequestParam String password,@RequestParam String role) {
@@ -76,7 +79,11 @@ public class StudentController {
     public List<LeaderBoardResponse> viewLeaderBoard(@RequestParam String submissiontype,@RequestParam Integer subid) {
     	return leaderBoardService.getLeaderboardForAssignment(submissiontype,subid );
     }
- 
+   @GetMapping("/assesmentReports")
+    public ResponseEntity<ResponseStructure<String>> getReports(@RequestParam Integer assesmentid,@RequestParam  Integer subid) {
+    	return reviewService.getReports(assesmentid, subid);
+    	
+    }
     
     
 }

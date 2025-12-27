@@ -27,18 +27,21 @@ public class AttendenceService {
 	@Autowired
 	private BatchesRepository batchesRepository;
 	
+	
+	// mark the attendence 
 	public ResponseEntity<ResponseStructure<Attendence>> markAttendence(Attendence attendence) {
 		ResponseStructure<Attendence> rs=new ResponseStructure<Attendence>();
-		// checck weather the given student id is there are not 
+		
+		// checck weather the given student id is there are not if not throw exception
 		Users student=userRepository.findById(attendence.getStudent().getId())
 				.orElseThrow( () -> new UserNotFoundException("Student Not Found"));
 		
-		//to check the batch is valid or not 
+		//to check the batch is valid or not if not throw exception
 		Batches batch=batchesRepository.findById(attendence.getBatch().getId())
 				.orElseThrow( () -> new BatchNotFoundException("Batch Not Found"));
 		
 		
-//		Attendence attend=new Attendence();
+        //		Attendence attend=new Attendence();
  	
 		attendence.setBatch(batch);
 		attendence.setStudent(student);
@@ -52,12 +55,13 @@ public class AttendenceService {
 		
 		return new ResponseEntity<ResponseStructure<Attendence>>(rs,HttpStatus.OK);
 	}
-	
+	 //get the attendence of the studnet
 	public ResponseEntity<ResponseStructure<String>> getAttendence(Integer studentId,LocalDate date) {
 		ResponseStructure<String> rs=new ResponseStructure<String>();
 		
+		//check wethere the student is valid or not if not throw exception
 		Users student=userRepository.findById(studentId).orElseThrow( () -> new UserNotFoundException("Student Not Found") );
-		
+		//find the attendence wether is the student id and on perticular date wether he is present o not if not throw error 
 		Attendence attend=attendenceRepository.findByStudentAndDate(student,date).orElseThrow(()-> new UserNotFoundException("Student Not Found") );
 		
 		rs.setStatuscode(HttpStatus.OK.value());

@@ -68,7 +68,7 @@ public class TasksSubmissionService {
 //	}
 	
 	
-	
+	//get the task results
 	public ResponseEntity<ResponseStructure<TaskSubmission>> getTaskResult(Integer studentid,Integer taskid) {
 		
 		ResponseStructure<TaskSubmission> rs=new ResponseStructure<TaskSubmission>();
