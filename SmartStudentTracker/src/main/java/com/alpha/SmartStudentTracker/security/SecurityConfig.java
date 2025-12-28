@@ -19,23 +19,50 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 public class SecurityConfig {
 	
-	 @Bean
-	    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+//	 @Bean
+//	    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+//
+//	        http
+//	            .csrf(csrf -> csrf.disable())
+//	            .authorizeHttpRequests(auth -> auth
+//	                .requestMatchers("/admin/**").hasRole("ADMIN")
+//	                .requestMatchers("/trainer/**").hasRole("TRAINER")
+//	                .requestMatchers("/student/**").hasRole("STUDENT")
+//	                .anyRequest().authenticated()
+//	            )
+////	            .httpBasic();
+//	            .httpBasic(httpBasic -> {});
+//
+//
+//	        return http.build();
+//	    }
+	@Bean
+	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
-	        http
-	            .csrf(csrf -> csrf.disable())
-	            .authorizeHttpRequests(auth -> auth
-	                .requestMatchers("/admin/**").hasRole("ADMIN")
-	                .requestMatchers("/trainer/**").hasRole("TRAINER")
-	                .requestMatchers("/student/**").hasRole("STUDENT")
-	                .anyRequest().authenticated()
-	            )
-//	            .httpBasic();
-	            .httpBasic(httpBasic -> {});
+	    http
+	        .csrf(csrf -> csrf.disable())
+	        .authorizeHttpRequests(auth -> auth
 
+	            // ✅ Allow login endpoints without authentication
+	            .requestMatchers(
+	                "/student/login",
+	                "/admin/login",
+	                "/trainer/login"
+	            ).permitAll()
 
-	        return http.build();
-	    }
+	            // 🔒 Role-based access
+	            .requestMatchers("/admin/**").hasRole("ADMIN")
+	            .requestMatchers("/trainer/**").hasRole("TRAINER")
+	            .requestMatchers("/student/**").hasRole("STUDENT")
+
+	            // 🔒 Everything else needs authentication
+	            .anyRequest().authenticated()
+	        )
+	        .httpBasic(httpBasic -> {});
+
+	    return http.build();
+	}
+
 
 	    @Bean
 	    public UserDetailsService userDetailsService() {
