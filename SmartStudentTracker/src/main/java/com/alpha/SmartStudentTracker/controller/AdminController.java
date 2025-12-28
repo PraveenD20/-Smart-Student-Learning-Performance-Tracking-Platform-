@@ -18,6 +18,8 @@ import com.alpha.SmartStudentTracker.entity.Batches;
 import com.alpha.SmartStudentTracker.entity.Courses;
 import com.alpha.SmartStudentTracker.entity.Subject;
 import com.alpha.SmartStudentTracker.entity.Users;
+import com.alpha.SmartStudentTracker.repository.AssesmentRepository;
+import com.alpha.SmartStudentTracker.repository.AssesmentSubmissionRepository;
 import com.alpha.SmartStudentTracker.repository.SubjectRepository;
 import com.alpha.SmartStudentTracker.service.BatcheService;
 import com.alpha.SmartStudentTracker.service.CoursesService;
@@ -37,7 +39,8 @@ public class AdminController {
 	private BatcheService batchservice;
 	@Autowired
 	private SubjectService subjectService;
-	
+	@Autowired
+	private AssesmentSubmissionRepository assesmentSubmissionRepository;
 
 	// this is method is to save the Amin  meaning to register the admin first
 	@PostMapping("/RegisterAdmin")
@@ -113,6 +116,12 @@ public class AdminController {
 	public ResponseEntity<ResponseStructure<Subject>> saveSubject(@RequestBody Subject subject) {
 		return subjectService.saveSubject(subject);
 	}
+	
+	@GetMapping("/debug/count")
+	public long count() {
+	    return assesmentSubmissionRepository.count();
+	}
+
 
 	
 	
