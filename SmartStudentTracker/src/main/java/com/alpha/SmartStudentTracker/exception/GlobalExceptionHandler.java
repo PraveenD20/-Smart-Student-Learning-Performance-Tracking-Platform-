@@ -16,7 +16,7 @@ public class GlobalExceptionHandler {
 		ResponseStructure<String> rs=new ResponseStructure<String>();
 		
 		rs.setStatuscode(HttpStatus.NOT_FOUND.value());
-		rs.setMessage("User Not Found");
+		rs.setMessage( e.getMessage());
 		rs.setData("Not_Found");
 
 		return new  ResponseEntity<ResponseStructure<String>>(rs,HttpStatus.NOT_FOUND);

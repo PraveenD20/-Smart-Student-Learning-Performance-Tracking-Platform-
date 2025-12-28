@@ -62,7 +62,7 @@ public class AttendenceService {
 		//check wethere the student is valid or not if not throw exception
 		Users student=userRepository.findById(studentId).orElseThrow( () -> new UserNotFoundException("Student Not Found") );
 		//find the attendence wether is the student id and on perticular date wether he is present o not if not throw error 
-		Attendence attend=attendenceRepository.findByStudentAndDate(student,date).orElseThrow(()-> new UserNotFoundException("Student Not Found") );
+		Attendence attend=attendenceRepository.findByStudentAndDate(student,date).orElseThrow(()-> new UserNotFoundException("Absent") );
 		
 		rs.setStatuscode(HttpStatus.OK.value());
 		rs.setMessage(attend.getDate()+" "+attend.getStatus());

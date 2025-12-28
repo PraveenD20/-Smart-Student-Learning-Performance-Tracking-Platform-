@@ -2,7 +2,7 @@ package com.alpha.SmartStudentTracker.entity;
 
 import org.hibernate.annotations.ManyToAny;
 import org.hibernate.validator.constraints.Length;
-import org.springframework.boot.webmvc.autoconfigure.WebMvcProperties.Apiversion.Use;
+//import org.springframework.boot.webmvc.autoconfigure.WebMvcProperties.Apiversion.Use;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
