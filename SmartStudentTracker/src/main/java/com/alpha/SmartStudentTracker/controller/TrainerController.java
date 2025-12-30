@@ -30,6 +30,8 @@ import com.alpha.SmartStudentTracker.service.TaskService;
 import com.alpha.SmartStudentTracker.service.TasksSubmissionService;
 import com.alpha.SmartStudentTracker.service.UserService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/trainer")
 public class TrainerController {
@@ -50,23 +52,23 @@ public class TrainerController {
 	private ReviewService reviewService;
     
     @GetMapping("/login")
-	public ResponseEntity<ResponseStructure<Users>> login(@RequestParam String email,@RequestParam String password,@RequestParam String role) {
+	public ResponseEntity<ResponseStructure<Users>> login(@Valid @RequestParam String email,@Valid @RequestParam String password,@RequestParam String role) {
 		return userService.getUser(email, password, role);
 	}
     
     
 	@PutMapping("/markAttendence")
-	public ResponseEntity<ResponseStructure<Attendence>> markAttendence(@RequestBody Attendence attendence) {
+	public ResponseEntity<ResponseStructure<Attendence>> markAttendence(@Valid @RequestBody Attendence attendence) {
 		return attendenceService.markAttendence(attendence);
 	}
     
 	@PostMapping("/createAssesment")
-	public ResponseEntity<ResponseStructure<Assesment>> createAssesment(@RequestBody Assesment assesment) {
+	public ResponseEntity<ResponseStructure<Assesment>> createAssesment(@Valid @RequestBody Assesment assesment) {
 		return assesmentService.saveAssesment(assesment);	
 	}
 	
 	@PostMapping("/assignAssesmentToBatch")
-	public ResponseEntity<ResponseStructure<Assesment>> assignAssesmentToBatch(@RequestParam Integer assesmentid,@RequestParam Integer batchid) {
+	public ResponseEntity<ResponseStructure<Assesment>> assignAssesmentToBatch(@Valid @RequestParam Integer assesmentid,@RequestParam Integer batchid) {
 		return assesmentService.assignAssesmentToBatch(assesmentid, batchid);
 	}
 	
@@ -75,7 +77,7 @@ public class TrainerController {
 //		return assesmentResultService.saveResult(assesmentSubmission);
 //	} 
 	@PostMapping("/createTask")
-	public ResponseEntity<ResponseStructure<Task>> createTask(@RequestBody Task task) {
+	public ResponseEntity<ResponseStructure<Task>> createTask(@Valid @RequestBody Task task) {
 		 return taskService.saveTask(task);
 	}
 	@PostMapping("/assignTaskToBatch")
@@ -84,12 +86,12 @@ public class TrainerController {
 		return taskService.assignTaskToBatch(taskid, batchid);
 	}
     @PostMapping("/review")
-	public ResponseEntity<ResponseStructure<Review>> reviewTask(@RequestBody Review review) {
+	public ResponseEntity<ResponseStructure<Review>> reviewTask(@Valid @RequestBody Review review) {
 		return reviewService.reviewTaskAssesment(review);
 	}
 	
     @PostMapping("/updateAssesment")
-    public ResponseEntity<ResponseStructure<Assesment>> updateAssesment(@RequestBody UpdateAssesmentDTO upAssesmentDTO) {
+    public ResponseEntity<ResponseStructure<Assesment>> updateAssesment(@Valid @RequestBody UpdateAssesmentDTO upAssesmentDTO) {
     	return assesmentService.updateAssesment(upAssesmentDTO);
     }
 	 

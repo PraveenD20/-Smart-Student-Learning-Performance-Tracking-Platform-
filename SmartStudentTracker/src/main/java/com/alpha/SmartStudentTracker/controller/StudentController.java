@@ -26,6 +26,8 @@ import com.alpha.SmartStudentTracker.service.ReviewService;
 import com.alpha.SmartStudentTracker.service.TasksSubmissionService;
 import com.alpha.SmartStudentTracker.service.UserService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/student")
 public class StudentController {
@@ -44,29 +46,29 @@ public class StudentController {
 	private ReviewService reviewService;
 	
 	@GetMapping("/login")
-	public ResponseEntity<ResponseStructure<Users>> login(@RequestParam String email,@RequestParam String password,@RequestParam String role) {
+	public ResponseEntity<ResponseStructure<Users>> login(@Valid @RequestParam String email,@Valid @RequestParam String password,@Valid @RequestParam String role) {
 		return userService.getUser(email, password, role);
 	}
 	
 	@GetMapping("/getAttendence")
-	public ResponseEntity<ResponseStructure<String>> studentAttendence(@RequestParam Integer studentId,@RequestParam  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
+	public ResponseEntity<ResponseStructure<String>> studentAttendence(@Valid @RequestParam Integer studentId,@Valid @RequestParam  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
 		return attendenceService.getAttendence(studentId,date);
 
 	}
 	 
 	@PostMapping("/submitTask")
-	public ResponseEntity<ResponseStructure<TaskSubmission>> submitTask(@RequestBody TaskSubmission taskSubmission) {
+	public ResponseEntity<ResponseStructure<TaskSubmission>> submitTask(@Valid @RequestBody TaskSubmission taskSubmission) {
 	return tasksSubmissionService.submitTask(taskSubmission);	
 	
 	}
 	
     @GetMapping("/getTaskResult")
-	public ResponseEntity<ResponseStructure<TaskSubmission>> getTaskResult(@RequestParam Integer studentid,@RequestParam Integer tasksubId) {
+	public ResponseEntity<ResponseStructure<TaskSubmission>> getTaskResult(@Valid @RequestParam Integer studentid,@Valid @RequestParam Integer tasksubId) {
 		return tasksSubmissionService.getTaskResult(studentid, tasksubId);
 	}	
     
     @PostMapping("/submitAssesment")
-	public ResponseEntity<ResponseStructure<AssesmentSubmission>> saveResult(@RequestBody AssesmentSubmission assesmentSubmission) {
+	public ResponseEntity<ResponseStructure<AssesmentSubmission>> saveResult(@Valid @RequestBody AssesmentSubmission assesmentSubmission) {
 		return assesmentResultService.saveResult(assesmentSubmission);	
 	}
     
@@ -76,11 +78,11 @@ public class StudentController {
 	}
     
     @GetMapping("/leaderBoard")
-    public List<LeaderBoardResponse> viewLeaderBoard(@RequestParam String submissiontype,@RequestParam Integer subid) {
+    public List<LeaderBoardResponse> viewLeaderBoard(@Valid @RequestParam String submissiontype,@Valid @RequestParam Integer subid) {
     	return leaderBoardService.getLeaderboardForAssignment(submissiontype,subid );
     }
    @GetMapping("/assesmentReports")
-    public ResponseEntity<ResponseStructure<String>> getReports(@RequestParam Integer assesmentid,@RequestParam  Integer subid) {
+    public ResponseEntity<ResponseStructure<String>> getReports( @RequestParam Integer assesmentid,@RequestParam  Integer subid) {
     	return reviewService.getReports(assesmentid, subid);
     	
     }

@@ -26,6 +26,8 @@ import com.alpha.SmartStudentTracker.service.CoursesService;
 import com.alpha.SmartStudentTracker.service.SubjectService;
 import com.alpha.SmartStudentTracker.service.UserService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/admin")
 public class AdminController {
@@ -44,12 +46,12 @@ public class AdminController {
 
 	// this is method is to save the Amin  meaning to register the admin first
 	@PostMapping("/RegisterAdmin")
-	public ResponseEntity<ResponseStructure<Users>> saveAdmin(@RequestBody Users user) {
+	public ResponseEntity<ResponseStructure<Users>> saveAdmin( @Valid @RequestBody Users user) {
 		return userservice.saveUsers(user);
 	}
 	//login admin
 	@GetMapping("/login")
-	public ResponseEntity<ResponseStructure<Users>> login(@RequestParam String email,@RequestParam String password,@RequestParam String role) {
+	public ResponseEntity<ResponseStructure<Users>> login(@Valid @RequestParam String email,@Valid @RequestParam String password,@Valid @RequestParam String role) {
 		return userservice.getUser(email, password, role);
 	}
 
@@ -61,24 +63,24 @@ public class AdminController {
 	}
 	// save student method
 	@PostMapping("/SaveStudent")
-	public ResponseEntity<ResponseStructure<Users>> saveStudent(@RequestBody Users user) {
+	public ResponseEntity<ResponseStructure<Users>> saveStudent(@Valid @RequestBody Users user) {
 		return userservice.saveUsers(user);
 
 	}
 	//method to save the course
 	@PostMapping("/SaveCourse") //create course
-	public ResponseEntity<ResponseStructure<Courses>> saveCourse(@RequestBody Courses course) {
+	public ResponseEntity<ResponseStructure<Courses>> saveCourse(@Valid @RequestBody Courses course) {
 		return coursesservice.saveCourse(course);
 
 	}
     // method to get all the Trainers
 	@GetMapping("/getAllTrainers")
-	public List<UserResponse> getAllTrainers(@RequestParam String role) {
+	public List<UserResponse> getAllTrainers(@Valid @RequestParam String role) {
 		return userservice.getAllUsers(role);
 	}
 	//Api to get all the Students
 	@GetMapping("/getAllStudents")
-	public List<UserResponse> getAllStudents(String role) {
+	public List<UserResponse> getAllStudents(@Valid @RequestParam String role) {
 		return userservice.getAllUsers(role);
 	}
 	
@@ -91,7 +93,7 @@ public class AdminController {
  
 	
 	@PostMapping("/createBatches")
-	public ResponseEntity<ResponseStructure<Batches>> createBatches(@RequestBody Batches batch) {
+	public ResponseEntity<ResponseStructure<Batches>> createBatches(@Valid @RequestBody Batches batch) {
 		return  batchservice.saveBatches(batch);
 	}
    
@@ -99,7 +101,7 @@ public class AdminController {
 	
 	@PostMapping("/assignStudentToBatch")
 	public ResponseEntity<ResponseStructure<Users>> assignStudentToBatch(
-	        @RequestBody AssigningBatchToStudent request) {
+			@Valid @RequestBody AssigningBatchToStudent request) {
 
 	    return batchservice.assignStudentsToBatch(
 	            request.getStudentId(),
@@ -107,13 +109,13 @@ public class AdminController {
 	    );
 	}
 	 
-	public void assignTrainerToBatch(@RequestParam Integer trainerid,@RequestParam Integer batchid) {
+	public void assignTrainerToBatch(@Valid @RequestParam Integer trainerid,@Valid @RequestParam Integer batchid) {
 		
 		
 	}
 	
 	@PostMapping("/saveSubject")
-	public ResponseEntity<ResponseStructure<Subject>> saveSubject(@RequestBody Subject subject) {
+	public ResponseEntity<ResponseStructure<Subject>> saveSubject(@Valid @RequestBody Subject subject) {
 		return subjectService.saveSubject(subject);
 	}
 	
